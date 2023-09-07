@@ -1,0 +1,5 @@
+﻿name: .NET WASI Action
+description: An experimental GitHub Action for running .NET on WASI
+runs:
+  using: node20
+  main: ./dist/index.mjs

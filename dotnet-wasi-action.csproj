@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <RuntimeIdentifier>wasi-wasm</RuntimeIdentifier>
+        <OutputType>Exe</OutputType>
+        <PublishTrimmed>true</PublishTrimmed>
+        <WasmSingleFileBundle>true</WasmSingleFileBundle>
+    </PropertyGroup>
+
+    <Target Name="CopyWasiModuleToExtensionPath" AfterTargets="_WasiGenerateAppBundle" Condition="'$(WasmPublishPath)' != ''">
+        <PropertyGroup>
+            <ExpectedWasiModule>$(WasmAppDir)$(MSBuildProjectName).wasm</ExpectedWasiModule>
+            <WasmPublishFullPath>$([MSBuild]::NormalizePath('$(WasmPublishPath)'))</WasmPublishFullPath>
+        </PropertyGroup>
+        <Message Importance="High" Text="Copying the file from $(ExpectedWasiModule) to $(WasmPublishFullPath)" />
+        <Error Text="$(ExpectedWasiModule) doesn't exist" Condition="!Exists($(ExpectedWasiModule))" />
+        <MakeDir Directories="$(WasmPublishFullPath)" Condition="!Exists($(WasmPublishFullPath))"  />
+        <Copy SourceFiles="$(ExpectedWasiModule)" DestinationFolder="$(WasmPublishFullPath)" SkipUnchangedFiles="true" />
+    </Target>
+</Project>
