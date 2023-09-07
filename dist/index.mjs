@@ -6,6 +6,9 @@ const wasi = new WASI({
   version: 'preview1',
   args: argv,
   env,
+  preopens: {
+    '/': `${env['GITHUB_WORKSPACE']}`
+  }
 });
 
 const wasm = await WebAssembly.compile(
