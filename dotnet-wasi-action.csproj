@@ -5,6 +5,7 @@
         <OutputType>Exe</OutputType>
         <PublishTrimmed>true</PublishTrimmed>
         <WasmSingleFileBundle>true</WasmSingleFileBundle>
+        <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
     </PropertyGroup>
 
     <Target Name="CopyWasiModuleToExtensionPath" AfterTargets="_WasiGenerateAppBundle" Condition="'$(WasmPublishPath)' != ''">
